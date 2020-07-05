@@ -1,0 +1,47 @@
+---
+title: "4.6"
+author: "Greg Matesi"
+date: "July 5, 2020"
+output: pdf_document
+---
+
+```{r}
+options(digits=4)
+```
+
+# Exercise 4.6
+
+Suppose we collect dat afor a group of sutdents is a statisics class with variables $X_1$ = hours studied, $X_2$ = undergrad GPA, and $Y$ = receive an A. We fit a logistic regression and produce estimated coefficient, $\hat{\beta}_0=-6$, $\hat{\beta}_1 = 0.05$, $\hat{\beta}_2 = 1$.
+
+## Estimate the probability that a student who studies for 40 hrs and has an undergrad GPA of 3.5 gets a A
+
+ Set the coefficients
+```{r}
+x1 <- 40; x2 <- 3.5
+b0 <- -6; b1 <- 0.05; b2 <- 1
+```
+
+Use equation (4.2).
+
+```{r}
+e <- exp(b0 + b1*x1+b2*x2)
+e/(1+e)
+```
+The probability that this student gets an A is 0.38.
+
+
+## How many hours would the student in part (a) need to study to have a 50% chance of getting an A?
+
+Using equation (4.2) again, substitute $p(X) = 0.50$ and solve for $X_1$
+```{r}
+hours4A <- -(b0+b2*x2)/b1
+hours4A
+```
+
+### Check answer
+```{r}
+x1 <- hours4A
+e <- exp(b0 + b1*x1+b2*x2)
+e/(1+e) == .5
+```
+So if the student from part (a) studies for 50 hours, they have a 50% chance of getting an A.

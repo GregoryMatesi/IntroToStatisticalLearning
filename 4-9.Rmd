@@ -1,0 +1,30 @@
+---
+title: "4.9: Odds"
+author: "Greg Matesi"
+date: "July 5, 2020"
+output: pdf_document
+---
+# On average, what fraction of people with an odds of 0.37 of defaulting on their credit card payment will actually default?
+
+Using equation (4.3) for the odds and rerwiting the equation as (4.2), we get
+
+$p/(1+p) = .37$
+
+$p=.37/(1+.37)$
+
+$p=\frac{.37}{1.37}$
+
+```{r}
+.37/1.37
+```
+p=0.27.
+So on average, 27% of people with an odds of .37 of defaulting will actually default.
+
+# Suppose that an individual has a 16% chance of defaulting on her credit card payment. What are the odds that she will default?
+
+Using equation (4.3) once more,
+```{r}
+.16/(1-.16)
+```
+
+So a person with 16% chance of defaulting has an odds of defaulting of 0.19.
