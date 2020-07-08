@@ -1,5 +1,5 @@
 ---
-title: "5.4"
+title: "5.8"
 author: "Greg Matesi"
 date: "July 12, 2020"
 output: pdf_document
@@ -118,3 +118,9 @@ The results are indeed the same as for the original seed of 1.
 
 ## (e)
 **Which of the models in (c) had the smallest LOOCV error? Is this what you expected? Explain**
+
+The quadratic model had the lowest LOOCV error. This was expected because the data looked quadratic from the beginning.
+
+
+## (f) 
+**comment on the statistical significance of ...**
