@@ -1,0 +1,120 @@
+---
+title: "5.4"
+author: "Greg Matesi"
+date: "July 12, 2020"
+output: pdf_document
+---
+
+# We will perfomr cross-validation on a simulated data set.
+
+## (a)
+**Generate a simulated data set**
+```{r}
+#library(ISLR)
+library(boot) # For cv.glm()
+set.seed(1)
+y <- rnorm(100)
+x <- rnorm(100)
+y <- x - 2*x^2 + rnorm(100)
+```
+
+**In this dataset, what is _n_ and what is _p_? Write out the model used to generate the data in equation form.**
+
+## (b)
+
+**create a scatterplot of $X$ against $Y$. Comment on what you find.**
+```{r}
+plot(x,y)
+```
+The relationship between $X$ and $Y$ is clearly negative quadratic. The scatterplot forms a fairly nice parabola.
+
+## (c)
+**Set a random seed, and then compute the LOOCV errors that result from fitting the followering four models using least squares:**
+
+### i. $Y = \beta_0 + \beta_1 X + \epsilon$
+### i. $Y = \beta_0 + \beta_1 X + \beta_2 X^2 + \epsilon$
+### i. $Y = \beta_0 + \beta_1 X + \beta_2 X^2 + \beta_3 X^3 + \epsilon$
+### i. $Y = \beta_0 + \beta_1 X + \beta_2 X^2 + \beta_3 X^3 + \beta_4 X^4 + \epsilon$
+**Note you may find it helpful to use the data.frame() function to create a single data set containing both $X$ and $Y$.**
+
+```{r}
+xy <- data.frame(x,y)
+dim(xy)
+```
+
+```{r}
+glm.1 <- glm(y~x, data = xy)
+coef(glm.1)
+
+cv.err.1 <- cv.glm(xy,glm.1)
+cv.err.1$delta
+```
+
+```{r}
+glm.2 <- glm(y~x+I(x^2), data = xy)
+coef(glm.2)
+
+cv.err.2 <- cv.glm(xy,glm.2)
+cv.err.2$delta
+```
+```{r}
+glm.3 <- glm(y~x+I(x^2)+I(x^3), data = xy)
+coef(glm.3)
+
+cv.err.3 <- cv.glm(xy,glm.3)
+cv.err.3$delta
+```
+
+```{r}
+glm.4 <- glm(y~x + I(x^2) + I(x^3) + I(x^4), data = xy)
+coef(glm.4)
+
+cv.err.4 <- cv.glm(xy,glm.4)
+cv.err.4$delta
+```
+
+
+## (d)
+**Repeat (c) using another random seed, and report your results. Are your results the same as what you got in (c)? Why?**
+
+```{r}
+rand.num <- runif(1, 0, 100)
+rand.num
+set.seed(rand.num)
+```
+
+```{r}
+glm.1 <- glm(y~x, data = xy)
+coef(glm.1)
+
+cv.err <- cv.glm(xy,glm.1)
+all.equal(cv.err$delta, cv.err.1$delta)
+```
+
+```{r}
+glm.2 <- glm(y~x+I(x^2), data = xy)
+coef(glm.2)
+
+cv.err <- cv.glm(xy,glm.2)
+all.equal(cv.err$delta, cv.err.2$delta)
+```
+```{r}
+glm.3 <- glm(y~x+I(x^2)+I(x^3), data = xy)
+coef(glm.3)
+
+cv.err <- cv.glm(xy,glm.3)
+all.equal(cv.err$delta, cv.err.3$delta)
+```
+
+```{r}
+glm.4 <- glm(y~x + I(x^2) + I(x^3) + I(x^4), data = xy)
+coef(glm.4)
+
+cv.err <- cv.glm(xy,glm.4)
+all.equal(cv.err$delta, cv.err.4$delta)
+```
+
+The results are indeed the same as for the original seed of 1.
+
+## (e)
+**Which of the models in (c) had the smallest LOOCV error? Is this what you expected? Explain**

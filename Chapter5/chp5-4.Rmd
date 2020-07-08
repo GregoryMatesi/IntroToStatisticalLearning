@@ -1,0 +1,8 @@
+---
+title: "5.4"
+author: "Greg Matesi"
+date: "July 12, 2020"
+output: pdf_document
+---
+
+# Suppose that we use some statistical learning method to make a prediction for the response $Y$ for a particular value of the predictor $X$. Carefully describe how we might estimate the standard deviation of our prediction.
